@@ -18,7 +18,7 @@ steps:
     inputs:
       ParentFolder: "$(Pipeline.Workspace)/s"
 
-  - task: torremo@1.0.0
+  - task: torremo@1.0.6
     displayName: Torremo
     inputs:
       stepName: "BakeTimeRing0"
