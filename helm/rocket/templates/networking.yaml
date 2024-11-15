@@ -1,0 +1,40 @@
+{{ if eq .Values.env.targetLandscape "dev" }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}-{{ .Values.sapId }}
+  namespace: rocket
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: rocket.127.0.0.1.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Chart.Name }}-{{ .Values.sapId }}
+                port:
+                  number: 8082
+{{ else }}
+apiVersion: gateway.kyma-project.io/v1beta1
+kind: APIRule
+metadata:
+  name: {{ .Chart.Name }}-{{ .Values.sapId }}
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  host: 
+    {{ .Values.env.targetLandscape }}-{{ .Chart.Name }}-{{ .Values.sapId }}.{{ .Values.cluster.id }}.kyma.ondemand.com
+  service:
+    name: {{ .Chart.Name }}-{{ .Values.sapId }}
+    port: 8082
+  timeout: 360
+  rules:
+    - path: /.*
+      methods: ["GET"]
+      mutators: []
+      accessStrategies:
+        - handler: allow
+{{ end }}

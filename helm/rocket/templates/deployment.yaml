@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-{{ .Values.sapId }}
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}-{{ .Values.sapId }}
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels: 
+      app.kubernetes.io/name: {{ .Chart.Name }}-{{ .Values.sapId }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Chart.Name }}-{{ .Values.sapId }}
+    spec:
+      imagePullSecrets:
+        - name: private-registry
+      containers:
+        - name: {{ .Chart.Name }}-{{ .Values.sapId }}
+          image: {{ .Values.image.repository }}/{{ .Chart.Name }}-{{ .Values.sapId }}:{{ .Values.image.tag }}
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: {{ .Values.pod.port }}
+              protocol: TCP
+          resources: {{ toYaml .Values.resources | nindent 12 }}
