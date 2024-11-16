@@ -13,8 +13,8 @@ steps:
       echo See https://aka.ms/yaml
     displayName: "Run a multi-line script"
 
-  - task: GetFolderContent@1.0.23
-    displayName: "Get Folder Content 1.0.23"
+  - task: GetFolderContent@1.0.24
+    displayName: "Get Folder Content 1.0.24"
     inputs:
       ParentFolder: "$(Pipeline.Workspace)/s"
 
