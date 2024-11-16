@@ -18,9 +18,9 @@ steps:
     inputs:
       ParentFolder: "$(Pipeline.Workspace)/s"
 
-  - task: torremo@1
-    displayName: Torremo
-    inputs:
-      stepName: "BakeTimeRing0"
-      flags: "--verbose --force --dry-run"
-      torremoVersion: "1.3.3"
+  # - task: torremo@1
+  #   displayName: Torremo
+  #   inputs:
+  #     stepName: "BakeTimeRing0"
+  #     flags: "--verbose --force --dry-run"
+  #     torremoVersion: "1.3.3"
