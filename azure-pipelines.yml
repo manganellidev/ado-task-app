@@ -17,7 +17,7 @@ steps:
       echo "Navigating to task directory"
       ls -la $(Agent.WorkFolder)
       ls -la $(Agent.WorkFolder)/_tasks
-      cd $(Agent.WorkFolder)/_tasks/GetFolderContent_a80e0b20-314e-4460-8909-017c8e65ba45/1.0.28/
+      cd $(Agent.WorkFolder)/_tasks/GetFolderContent_a80e0b20-314e-4460-8909-017c8e65ba45/1.0.29/
       echo "Running npm install"
       npm install
     displayName: "Install Dependencies for GetFolderContent Task"
