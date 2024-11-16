@@ -14,7 +14,7 @@ steps:
     displayName: "Run a multi-line script"
 
   - task: GetFolderContent@1.0.25
-    displayName: "Get Folder Content 1.0.25"
+    displayName: "Get Folder Content 1.0.26"
     inputs:
       ParentFolder: "$(Pipeline.Workspace)/s"
 
