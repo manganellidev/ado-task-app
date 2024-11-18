@@ -23,8 +23,8 @@ steps:
   #     npm install
   #   displayName: "Install Dependencies for GetFolderContent Task"
 
-  - task: GetFolderContent@1.0.35
-    displayName: "Get Folder Content 1.0.35"
+  - task: GetFolderContent@1.0.36
+    displayName: "Get Folder Content 1.0.36"
     inputs:
       ParentFolder: "$(Pipeline.Workspace)/s"
 
