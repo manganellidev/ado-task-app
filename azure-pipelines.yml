@@ -57,7 +57,7 @@ jobs:
             echo "Listing contents of tmp directory:"
             ls -la $(SDP_GO_LIB_CACHE_FOLDER)/
 
-      - task: GetFolderContent@1.0.48
-        displayName: "Get Folder Content 1.0.48"
+      - task: GetFolderContent@1.0.49
+        displayName: "Get Folder Content 1.0.49"
         inputs:
           ParentFolder: "$(Pipeline.Workspace)/s"
