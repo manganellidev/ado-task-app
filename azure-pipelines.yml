@@ -12,7 +12,7 @@ jobs:
   - job: Init
     displayName: "Init: Download and Cache Artifact"
     steps:
-      - task: torremo@1.0.25
+      - task: torremo@1.0.26
         displayName: Torremo
         inputs:
           stepName: "BakeTimeRing0"
