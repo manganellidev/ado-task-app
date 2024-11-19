@@ -45,6 +45,18 @@ jobs:
     dependsOn: Init
     displayName: "SDP: Call Go Library"
     steps:
+      - task: Cache@2
+        inputs:
+          key: '"concur-sdp-go-library-$(VERSION)" | "$(Agent.OS)"'
+          path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
+
+      - task: Bash@3
+        inputs:
+          targetType: "inline"
+          script: |
+            echo "Listing contents of tmp directory:"
+            ls -la $(SDP_GO_LIB_CACHE_FOLDER)/
+
       - task: GetFolderContent@1.0.48
         displayName: "Get Folder Content 1.0.48"
         inputs:
