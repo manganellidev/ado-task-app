@@ -1,8 +1,8 @@
 trigger:
   - main
 
-pool:
-  name: Default
+# pool:
+#   name: Default
 
 variables:
   SDP_GO_LIB_CACHE_FOLDER: $(Pipeline.Workspace)/s/sdp-go-lib-cache
