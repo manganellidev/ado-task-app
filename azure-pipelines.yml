@@ -12,66 +12,59 @@ jobs:
   - job: Init
     displayName: "Init: Download and Cache Artifact"
     steps:
+      - task: Cache@2
+        inputs:
+          key: '"concur-sdp-go-library-$(VERSION)" | "$(Agent.OS)"'
+          path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
+
+      - task: JFrogGenericArtifacts@1
+        inputs:
+          command: "Download"
+          connection: "artifactory_i851155"
+          specSource: "taskConfiguration"
+          fileSpec: |
+            {
+              "files": [
+                {
+                  "pattern": "concur-sdp-go-library/releases/concur-sdp-go-library-$(VERSION)",
+                  "target": "$(SDP_GO_LIB_CACHE_FOLDER)/",
+                  "flat": "true"
+                }
+              ]
+            }
+          failNoOp: true
+
+      - task: Bash@3
+        inputs:
+          targetType: "inline"
+          script: |
+            echo "Listing contents of the default temp directory:"
+            ls -la "$(SDP_GO_LIB_CACHE_FOLDER)/"
+
+  - job: SDP
+    dependsOn: Init
+    displayName: "SDP: Call Go Library"
+    steps:
+      - task: Cache@2
+        inputs:
+          key: '"concur-sdp-go-library-$(VERSION)" | "$(Agent.OS)"'
+          path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
+
+      - task: Bash@3
+        inputs:
+          targetType: "inline"
+          script: |
+            echo "Listing contents of tmp directory:"
+            ls -la $(SDP_GO_LIB_CACHE_FOLDER)/
+
+      - task: GetFolderContent@1.0.52
+        displayName: "Get Folder Content 1.0.52"
+        inputs:
+          ParentFolder: "$(Pipeline.Workspace)/s"
+
       - task: torremo@1.0.26
         displayName: Torremo
         inputs:
           stepName: "BakeTimeRing0"
           flags: "--verbose --force --dry-run"
           torremoVersion: "1.3.3"
-
-  #     - task: Cache@2
-  #       inputs:
-  #         key: '"concur-sdp-go-library-$(VERSION)" | "$(Agent.OS)"'
-  #         path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
-
-  #     - task: JFrogGenericArtifacts@1
-  #       inputs:
-  #         command: "Download"
-  #         connection: "artifactory_i851155"
-  #         specSource: "taskConfiguration"
-  #         fileSpec: |
-  #           {
-  #             "files": [
-  #               {
-  #                 "pattern": "concur-sdp-go-library/releases/concur-sdp-go-library-$(VERSION)",
-  #                 "target": "$(SDP_GO_LIB_CACHE_FOLDER)/",
-  #                 "flat": "true"
-  #               }
-  #             ]
-  #           }
-  #         failNoOp: true
-
-  #     - task: Bash@3
-  #       inputs:
-  #         targetType: "inline"
-  #         script: |
-  #           echo "Listing contents of the default temp directory:"
-  #           ls -la "$(SDP_GO_LIB_CACHE_FOLDER)/"
-
-  # - job: SDP
-  #   dependsOn: Init
-  #   displayName: "SDP: Call Go Library"
-  #   steps:
-  #     - task: Cache@2
-  #       inputs:
-  #         key: '"concur-sdp-go-library-$(VERSION)" | "$(Agent.OS)"'
-  #         path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
-
-  #     - task: Bash@3
-  #       inputs:
-  #         targetType: "inline"
-  #         script: |
-  #           echo "Listing contents of tmp directory:"
-  #           ls -la $(SDP_GO_LIB_CACHE_FOLDER)/
-
-  #     - task: GetFolderContent@1.0.52
-  #       displayName: "Get Folder Content 1.0.52"
-  #       inputs:
-  #         ParentFolder: "$(Pipeline.Workspace)/s"
-
-  #     - task: torremo@1.0.25
-  #       displayName: Torremo
-  #       inputs:
-  #         stepName: "BakeTimeRing0"
-  #         flags: "--verbose --force --dry-run"
-  #         torremoVersion: "1.3.3"
