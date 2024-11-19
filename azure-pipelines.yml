@@ -4,33 +4,47 @@ trigger:
 pool:
   name: Default
 
-steps:
-  - script: echo Hello, world!
-    displayName: "Run a one-line script"
+variables:
+  SDP_GO_LIB_CACHE_FOLDER: $(Pipeline.Workspace)/s/sdp-go-lib-cache
 
-  - script: |
-      echo Add other tasks to build, test, and deploy your project.
-      echo See https://aka.ms/yaml
-    displayName: "Run a multi-line script"
+jobs:
+  - job: Init
+    displayName: "Init: Download and Cache Artifact"
+    steps:
+      - task: Cache@2
+        inputs:
+          key: '"concur-sdp-go-library-$(VERSION)" | "$(Agent.OS)"'
+          path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
 
-  # - script: |
-  #     echo "Navigating to task directory"
-  #     ls -la $(Agent.WorkFolder)
-  #     ls -la $(Agent.WorkFolder)/_tasks
-  #     cd $(Agent.WorkFolder)/_tasks/GetFolderContent_a80e0b20-314e-4460-8909-017c8e65ba45/1.0.30/
-  #     cat package.json
-  #     echo "Running npm install"
-  #     npm install
-  #   displayName: "Install Dependencies for GetFolderContent Task"
+      - task: JFrogGenericArtifacts@1
+        inputs:
+          command: "Download"
+          connection: "artifactory_i851155"
+          specSource: "taskConfiguration"
+          fileSpec: |
+            {
+              "files": [
+                {
+                  "pattern": "concur-sdp-go-library/releases/concur-sdp-go-library-$(VERSION)",
+                  "target": "$(SDP_GO_LIB_CACHE_FOLDER)/",
+                  "flat": "true"
+                }
+              ]
+            }
+          failNoOp: true
 
-  - task: GetFolderContent@1.0.48
-    displayName: "Get Folder Content 1.0.48"
-    inputs:
-      ParentFolder: "$(Pipeline.Workspace)/s"
+      - task: Bash@3
+        inputs:
+          targetType: "inline"
+          script: |
+            echo "Listing contents of the default temp directory:"
+            ls -la "$(SDP_GO_LIB_CACHE_FOLDER)/"
 
-  # - task: torremo@1
-  #   displayName: Torremo
-  #   inputs:
-  #     stepName: "BakeTimeRing0"
-  #     flags: "--verbose --force --dry-run"
-  #     torremoVersion: "1.3.3"
+  - job: SDP
+    dependsOn: Init
+    displayName: "SDP: Call Go Library"
+    steps:
+      - task: GetFolderContent@1.0.48
+        displayName: "Get Folder Content 1.0.48"
+        inputs:
+          ParentFolder: "$(Pipeline.Workspace)/s"
