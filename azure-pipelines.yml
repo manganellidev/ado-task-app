@@ -38,7 +38,7 @@ jobs:
 
       - task: Cache@2
         inputs:
-          key: '"concur-sdp-go-library-$(LATEST_VERSION)" | "$(Agent.OS)"'
+          key: '"concur-sdp-go-library" | "$(Agent.OS)" | "$(LATEST_VERSION)"'
           path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
 
       - task: Bash@3
@@ -91,7 +91,7 @@ jobs:
     steps:
       - task: Cache@2
         inputs:
-          key: '"concur-sdp-go-library-$(LATEST_VERSION)" | "$(Agent.OS)"'
+          key: '"concur-sdp-go-library" | "$(Agent.OS)" | "$(LATEST_VERSION)"'
           path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
 
       - task: Bash@3
