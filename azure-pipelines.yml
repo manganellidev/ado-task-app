@@ -30,6 +30,9 @@ jobs:
             fi
 
             echo "Latest release tag is $LATEST_VERSION"
+            # Export for use within the same job
+            echo "##vso[task.setvariable variable=LATEST_VERSION]$LATEST_VERSION"
+            # Export for use in other jobs
             echo "##vso[task.setvariable variable=LATEST_VERSION;isOutput=true]$LATEST_VERSION"
 
       - task: Cache@2
