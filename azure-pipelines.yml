@@ -10,8 +10,6 @@ variables:
 jobs:
   - job: Init
     displayName: "Init: Download and Cache SDP Go Binary"
-    outputs:
-      latestVersion: $(LATEST_VERSION)
     steps:
       - task: Bash@3
         displayName: "Fetch Latest Release Tag"
@@ -83,6 +81,8 @@ jobs:
           script: |
             echo "Listing contents of the default temp directory:"
             ls -la "$(SDP_GO_LIB_CACHE_FOLDER)/"
+    outputs:
+      latestVersion: $(LATEST_VERSION)
 
   - job: SDP
     displayName: "SDP: Call Go Library"
