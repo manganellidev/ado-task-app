@@ -26,6 +26,7 @@ jobs:
           script: |
             echo "Downloading release from GitHub"
             gh release download "$(VERSION)" \
+              --hostname github.tools.sap \
               --repo concur-sap-ecosystem/sdp-go-library \
               --dir "$(SDP_GO_LIB_CACHE_FOLDER)"
 
