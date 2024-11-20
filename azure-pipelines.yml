@@ -81,14 +81,10 @@ jobs:
           script: |
             echo "Listing contents of the default temp directory:"
             ls -la "$(SDP_GO_LIB_CACHE_FOLDER)/"
-    outputs:
-      latestVersion: $(LATEST_VERSION)
 
   - job: SDP
     displayName: "SDP: Call Go Library"
     dependsOn: Init
-    variables:
-      LATEST_VERSION: $[ dependencies.Init.outputs['LATEST_VERSION'] ]
     steps:
       - task: Cache@2
         inputs:
