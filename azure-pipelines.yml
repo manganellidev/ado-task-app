@@ -85,6 +85,8 @@ jobs:
   - job: SDP
     displayName: "SDP: Call Go Library"
     dependsOn: Init
+    variables:
+      LATEST_VERSION: $[ dependencies.Init.outputs['setvarStep.LATEST_VERSION'] ]
     steps:
       - task: Cache@2
         inputs:
