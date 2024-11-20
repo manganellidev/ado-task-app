@@ -6,7 +6,7 @@ trigger:
 
 variables:
   SDP_GO_LIB_CACHE_FOLDER: $(Pipeline.Workspace)/s/sdp-go-lib-cache
-  VERSION: 0.0.2
+  VERSION: 0.0.1
 
 jobs:
   - job: Init
@@ -14,25 +14,40 @@ jobs:
     steps:
       - task: Cache@2
         inputs:
-          key: '"concur-sdp-go-library-$(VERSION)" | "$(Agent.OS)"'
+          key: '"concur-sdp-go-library" | "$(Agent.OS)"'
           path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
 
-      - task: JFrogGenericArtifacts@1
+      - task: Bash@3
+        displayName: "Download from GitHub Release"
+        env:
+          GH_TOKEN: $(GH_TOKEN)
         inputs:
-          command: "Download"
-          connection: "artifactory_i851155"
-          specSource: "taskConfiguration"
-          fileSpec: |
-            {
-              "files": [
-                {
-                  "pattern": "concur-sdp-go-library/releases/concur-sdp-go-library-$(VERSION)",
-                  "target": "$(SDP_GO_LIB_CACHE_FOLDER)/",
-                  "flat": "true"
-                }
-              ]
-            }
-          failNoOp: true
+          targetType: "inline"
+          script: |
+            echo "Logging in to GitHub"
+            echo "$(GH_TOKEN)" | gh auth login --with-token
+
+            echo "Downloading release from GitHub"
+            gh release download "$(VERSION)" \
+              --repo concur-sap-ecosystem/sdp-go-library \
+              --dir "$(SDP_GO_LIB_CACHE_FOLDER)"
+
+      # - task: JFrogGenericArtifacts@1
+      #   inputs:
+      #     command: "Download"
+      #     connection: "artifactory_i851155"
+      #     specSource: "taskConfiguration"
+      #     fileSpec: |
+      #       {
+      #         "files": [
+      #           {
+      #             "pattern": "concur-sdp-go-library/releases/concur-sdp-go-library-$(VERSION)",
+      #             "target": "$(SDP_GO_LIB_CACHE_FOLDER)/",
+      #             "flat": "true"
+      #           }
+      #         ]
+      #       }
+      #     failNoOp: true
 
       - task: Bash@3
         inputs:
@@ -47,7 +62,7 @@ jobs:
     steps:
       - task: Cache@2
         inputs:
-          key: '"concur-sdp-go-library-$(VERSION)" | "$(Agent.OS)"'
+          key: '"concur-sdp-go-library" | "$(Agent.OS)"'
           path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
 
       - task: Bash@3
