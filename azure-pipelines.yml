@@ -24,9 +24,13 @@ jobs:
         inputs:
           targetType: "inline"
           script: |
+            echo "Logging in to GitHub"
+            echo "$(GITHUB_TOKEN)" | gh auth login \
+              --hostname github.tools.sap \
+              --with-token
+
             echo "Downloading release from GitHub"
             gh release download "$(VERSION)" \
-              --hostname github.tools.sap \
               --repo concur-sap-ecosystem/sdp-go-library \
               --dir "$(SDP_GO_LIB_CACHE_FOLDER)"
 
