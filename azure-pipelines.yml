@@ -19,12 +19,11 @@ jobs:
 
       - task: Bash@3
         displayName: "Download from GitHub Release"
+        env:
+          GITHUB_TOKEN: $(GH_TOKEN)
         inputs:
           targetType: "inline"
           script: |
-            echo "Logging in to GitHub"
-            echo "$(GH_TOKEN)" | gh auth login --with-token
-
             echo "Downloading release from GitHub"
             gh release download "$(VERSION)" \
               --repo concur-sap-ecosystem/sdp-go-library \
