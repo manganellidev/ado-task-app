@@ -30,7 +30,8 @@ jobs:
             echo "Downloading release from GitHub"
             gh release download "$(VERSION)" \
               --repo concur-sap-ecosystem/sdp-go-library \
-              --dir "$(SDP_GO_LIB_CACHE_FOLDER)"
+              --dir "$(SDP_GO_LIB_CACHE_FOLDER)" \
+              --clobber
 
       # - task: JFrogGenericArtifacts@1
       #   inputs:
