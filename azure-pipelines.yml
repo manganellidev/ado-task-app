@@ -18,7 +18,7 @@ jobs:
           path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
 
       - task: Bash@3
-        displayName: "Download from GitHub Release"
+        displayName: "Download Latest Release from GitHub"
         env:
           GITHUB_TOKEN: $(GH_TOKEN)
         inputs:
@@ -27,11 +27,23 @@ jobs:
             echo "Logging in to GitHub"
             gh auth login --hostname github.tools.sap --with-token <<< "$GITHUB_TOKEN"
 
-            echo "Downloading release from GitHub"
-            gh release download "$(VERSION)" \
+            echo "Fetching the latest release tag"
+            LATEST_VERSION=$(gh release list --repo concur-sap-ecosystem/sdp-go-library --limit 1 --json tagName -q ".[0].tagName")
+
+            if [ -z "$LATEST_VERSION" ]; then
+              echo "Error: Unable to fetch the latest release tag."
+              exit 1
+            fi
+
+            echo "Latest release tag is $LATEST_VERSION"
+
+            echo "Downloading release $LATEST_VERSION from GitHub"
+            gh release download "$LATEST_VERSION" \
               --repo concur-sap-ecosystem/sdp-go-library \
               --dir "$(SDP_GO_LIB_CACHE_FOLDER)" \
               --clobber
+
+            echo "Download complete. Files saved to $(SDP_GO_LIB_CACHE_FOLDER)"
 
       # - task: JFrogGenericArtifacts@1
       #   inputs:
