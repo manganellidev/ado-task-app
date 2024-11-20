@@ -10,6 +10,8 @@ variables:
 jobs:
   - job: Init
     displayName: "Init: Download and Cache SDP Go Binary"
+    outputs:
+      latestVersion: $(LATEST_VERSION)
     steps:
       - task: Bash@3
         displayName: "Fetch Latest Release Tag"
