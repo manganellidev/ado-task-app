@@ -12,6 +12,7 @@ jobs:
     displayName: "Init: Download and Cache SDP Go Binary"
     steps:
       - task: Bash@3
+        name: "fetchLatestReleaseTag"
         displayName: "Fetch Latest Release Tag"
         env:
           GITHUB_TOKEN: $(GH_TOKEN)
@@ -86,7 +87,7 @@ jobs:
     displayName: "SDP: Call Go Library"
     dependsOn: Init
     variables:
-      LATEST_VERSION: $[ dependencies.Init.outputs['setvarStep.LATEST_VERSION'] ]
+      LATEST_VERSION: $[ dependencies.Init.outputs['fetchLatestReleaseTag.LATEST_VERSION'] ]
     steps:
       - task: Cache@2
         inputs:
