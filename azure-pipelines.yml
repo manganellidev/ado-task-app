@@ -25,9 +25,7 @@ jobs:
           targetType: "inline"
           script: |
             echo "Logging in to GitHub"
-            echo "$(GITHUB_TOKEN)" | gh auth login \
-              --hostname github.tools.sap \
-              --with-token
+            gh auth login --with-token <<< "$(GITHUB_TOKEN)" --hostname github.tools.sap
 
             echo "Downloading release from GitHub"
             gh release download "$(VERSION)" \
