@@ -19,8 +19,6 @@ jobs:
 
       - task: Bash@3
         displayName: "Download from GitHub Release"
-        env:
-          GH_TOKEN: $(GH_TOKEN)
         inputs:
           targetType: "inline"
           script: |
