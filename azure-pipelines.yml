@@ -5,7 +5,7 @@ trigger:
 #   name: Default
 
 variables:
-  TORREMO_LIB_CACHE_FOLDER: $(Pipeline.Workspace)/s/torremo-cache
+  TORREMO_LIB_CACHE_FOLDER: $(Pipeline.Workspace)/s/torremo-lib-cache
 
 jobs:
   - job: Init
