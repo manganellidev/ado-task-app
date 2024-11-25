@@ -5,11 +5,11 @@ trigger:
 #   name: Default
 
 variables:
-  SDP_GO_LIB_CACHE_FOLDER: $(Pipeline.Workspace)/s/sdp-go-lib-cache
+  TORREMO_LIB_CACHE_FOLDER: $(Pipeline.Workspace)/s/torremo-cache
 
 jobs:
   - job: Init
-    displayName: "Init: Download and Cache SDP Go Binary"
+    displayName: "Init: Download and Cache Torremo Library Binary"
     steps:
       - task: Bash@3
         name: "fetchLatestReleaseTag"
@@ -38,8 +38,8 @@ jobs:
 
       - task: Cache@2
         inputs:
-          key: '"concur-sdp-go-library" | "$(Agent.OS)" | "$(LATEST_VERSION)"'
-          path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
+          key: '"torremo" | "$(Agent.OS)" | "$(LATEST_VERSION)"'
+          path: "$(TORREMO_LIB_CACHE_FOLDER)/"
 
       - task: Bash@3
         displayName: "Download Latest Release from GitHub"
@@ -54,10 +54,10 @@ jobs:
             echo "Downloading release $LATEST_VERSION from GitHub"
             gh release download "$LATEST_VERSION" \
               --repo concur-sap-ecosystem/sdp-go-library \
-              --dir "$(SDP_GO_LIB_CACHE_FOLDER)" \
+              --dir "$(TORREMO_LIB_CACHE_FOLDER)" \
               --clobber
 
-            echo "Download complete. Files saved to $(SDP_GO_LIB_CACHE_FOLDER)"
+            echo "Download complete. Files saved to $(TORREMO_LIB_CACHE_FOLDER)"
 
       # - task: JFrogGenericArtifacts@1
       #   inputs:
@@ -69,7 +69,7 @@ jobs:
       #         "files": [
       #           {
       #             "pattern": "concur-sdp-go-library/releases/concur-sdp-go-library-$(VERSION)",
-      #             "target": "$(SDP_GO_LIB_CACHE_FOLDER)/",
+      #             "target": "$(TORREMO_LIB_CACHE_FOLDER)/",
       #             "flat": "true"
       #           }
       #         ]
@@ -81,25 +81,25 @@ jobs:
           targetType: "inline"
           script: |
             echo "Listing contents of the default temp directory:"
-            ls -la "$(SDP_GO_LIB_CACHE_FOLDER)/"
+            ls -la "$(TORREMO_LIB_CACHE_FOLDER)/"
 
   - job: SDP
-    displayName: "SDP: Call Go Library"
+    displayName: "SDP: Call Torremo Library"
     dependsOn: Init
     variables:
       LATEST_VERSION: $[ dependencies.Init.outputs['fetchLatestReleaseTag.LATEST_VERSION'] ]
     steps:
       - task: Cache@2
         inputs:
-          key: '"concur-sdp-go-library" | "$(Agent.OS)" | "$(LATEST_VERSION)"'
-          path: "$(SDP_GO_LIB_CACHE_FOLDER)/"
+          key: '"torremo" | "$(Agent.OS)" | "$(LATEST_VERSION)"'
+          path: "$(TORREMO_LIB_CACHE_FOLDER)/"
 
       - task: Bash@3
         inputs:
           targetType: "inline"
           script: |
             echo "Listing contents of tmp directory:"
-            ls -la $(SDP_GO_LIB_CACHE_FOLDER)/
+            ls -la $(TORREMO_LIB_CACHE_FOLDER)/
 
       # - task: GetFolderContent@1.0.53
       #   displayName: "Get Folder Content 1.0.53"
