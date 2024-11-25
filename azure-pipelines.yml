@@ -106,18 +106,18 @@ jobs:
       #   inputs:
       #     ParentFolder: "$(Pipeline.Workspace)/s"
 
-      - task: torremo@1.0.40
+      - task: torremo@1.0.38
         displayName: setParamsToFile
         inputs:
           stepName: "setParamsToFile"
           flags: "--appName rocket --artifactVersion 1.3.44  --teamIdentifier northstar"
 
-      - task: torremo@1.0.40
+      - task: torremo@1.0.38
         displayName: gitops
         inputs:
           stepName: "gitops"
 
-      - task: torremo@1.0.40
+      - task: torremo@1.0.38
         displayName: validateDeploy
         inputs:
           stepName: "validateDeploy"
