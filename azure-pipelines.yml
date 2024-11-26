@@ -13,6 +13,8 @@ extends:
   parameters:
     teamIdentifier: northstar
     appName: train
+    artifactVersion: 1.2.334
+    ghRepoUri: https://github.com/manganellidev/ado-task-app
 
     skipRing0ReleaseStage: false
     targetRegionRing0: int
