@@ -1,123 +1,30 @@
 trigger:
   - main
 
-# pool:
-#   name: Default
+resources:
+  repositories:
+    - repository: manga-torremo-pipeline-azure
+      endpoint: github.com
+      type: github
+      name: manganellidev/manga-torremo-pipeline-azure
 
-variables:
-  TORREMO_LIB_CACHE_FOLDER: $(Pipeline.Workspace)/s/torremo-lib-cache
+extends:
+  template: sdp-pipeline.yml@manga-torremo-pipeline-azure
+  parameters:
+    teamIdentifier: northstar
+    appName: train
 
-jobs:
-  - job: Init
-    displayName: "Init: Download and Cache Torremo Library Binary"
-    steps:
-      - task: Bash@3
-        name: "fetchLatestReleaseTag"
-        displayName: "Fetch Latest Release Tag"
-        env:
-          GITHUB_TOKEN: $(GH_TOKEN)
-        inputs:
-          targetType: "inline"
-          script: |
-            echo "Logging in to GitHub"
-            gh auth login --hostname github.tools.sap --with-token <<< "$GITHUB_TOKEN"
+    skipRing0ReleaseStage: false
+    targetRegionRing0: int
 
-            echo "Fetching the latest release tag"
-            LATEST_VERSION=$(gh release list --repo concur-sap-ecosystem/sdp-go-library --limit 1 --json tagName -q ".[0].tagName")
+    # skipRing1ReleaseStage: false
+    # targetRegionRing1: eu
+    # bakeTimeInMinutesRing1ReleaseStage: 1
 
-            if [ -z "$LATEST_VERSION" ]; then
-              echo "Error: Unable to fetch the latest release tag."
-              exit 1
-            fi
+    # skipRing2ReleaseStage: false
+    # targetRegionRing2: us
+    # bakeTimeInMinutesRing2ReleaseStage: 1
 
-            echo "Latest release tag is $LATEST_VERSION"
-            # Export for use within the same job
-            echo "##vso[task.setvariable variable=LATEST_VERSION]$LATEST_VERSION"
-            # Export for use in other jobs
-            echo "##vso[task.setvariable variable=LATEST_VERSION;isOutput=true]$LATEST_VERSION"
-
-      - task: Cache@2
-        inputs:
-          key: '"torremo" | "$(Agent.OS)" | "$(LATEST_VERSION)"'
-          path: "$(TORREMO_LIB_CACHE_FOLDER)/"
-
-      - task: Bash@3
-        displayName: "Download Latest Release from GitHub"
-        env:
-          GITHUB_TOKEN: $(GH_TOKEN)
-        inputs:
-          targetType: "inline"
-          script: |
-            echo "Logging in to GitHub"
-            gh auth login --hostname github.tools.sap --with-token <<< "$GITHUB_TOKEN"
-
-            echo "Downloading release $LATEST_VERSION from GitHub"
-            gh release download "$LATEST_VERSION" \
-              --repo concur-sap-ecosystem/sdp-go-library \
-              --dir "$(TORREMO_LIB_CACHE_FOLDER)" \
-              --clobber
-
-            echo "Download complete. Files saved to $(TORREMO_LIB_CACHE_FOLDER)"
-
-      # - task: JFrogGenericArtifacts@1
-      #   inputs:
-      #     command: "Download"
-      #     connection: "artifactory_i851155"
-      #     specSource: "taskConfiguration"
-      #     fileSpec: |
-      #       {
-      #         "files": [
-      #           {
-      #             "pattern": "concur-sdp-go-library/releases/concur-sdp-go-library-$(VERSION)",
-      #             "target": "$(TORREMO_LIB_CACHE_FOLDER)/",
-      #             "flat": "true"
-      #           }
-      #         ]
-      #       }
-      #     failNoOp: true
-
-      - task: Bash@3
-        inputs:
-          targetType: "inline"
-          script: |
-            echo "Listing contents of the default temp directory:"
-            ls -la "$(TORREMO_LIB_CACHE_FOLDER)/"
-
-  - job: SDP
-    displayName: "SDP: Call Torremo Library"
-    dependsOn: Init
-    variables:
-      LATEST_VERSION: $[ dependencies.Init.outputs['fetchLatestReleaseTag.LATEST_VERSION'] ]
-    steps:
-      - task: Cache@2
-        inputs:
-          key: '"torremo" | "$(Agent.OS)" | "$(LATEST_VERSION)"'
-          path: "$(TORREMO_LIB_CACHE_FOLDER)/"
-
-      - task: Bash@3
-        inputs:
-          targetType: "inline"
-          script: |
-            echo "Listing contents of tmp directory:"
-            ls -la $(TORREMO_LIB_CACHE_FOLDER)/
-
-      # - task: GetFolderContent@1.0.53
-      #   displayName: "Get Folder Content 1.0.53"
-      #   inputs:
-      #     ParentFolder: "$(Pipeline.Workspace)/s"
-
-      - task: torremo-beta@1.0.41
-        displayName: setParamsToFile
-        inputs:
-          stepName: "setParamsToFile"
-          flags: "--appName rocket --artifactVersion 1.3.44  --teamIdentifier northstar"
-
-      - task: torremo-beta@1.0.41
-        displayName: gitops
-        inputs:
-          stepName: "gitops"
-
-      - task: torremo-beta@1.0.41
-        displayName: validateDeploy
-        inputs:
-          stepName: "validateDeploy"
+    # skipRing3ReleaseStage: false
+    # targetRegionRing3: apj
+    # bakeTimeInMinutesRing3ReleaseStage: 1
