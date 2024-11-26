@@ -4,7 +4,7 @@ trigger:
 resources:
   repositories:
     - repository: manga-torremo-pipeline-azure
-      endpoint: github.com
+      endpoint: manganellidev
       type: github
       name: manganellidev/manga-torremo-pipeline-azure
 
