@@ -18,15 +18,15 @@ extends:
 
     skipRing0ReleaseStage: false
     targetRegionRing0: int
+    bakeTimeInMinutesRing0ReleaseStage: 1
 
-    # skipRing1ReleaseStage: false
-    # targetRegionRing1: eu
-    # bakeTimeInMinutesRing1ReleaseStage: 1
+    skipRing1ReleaseStage: false
+    targetRegionRing1: eu
+    bakeTimeInMinutesRing1ReleaseStage: 1
 
-    # skipRing2ReleaseStage: false
-    # targetRegionRing2: us
-    # bakeTimeInMinutesRing2ReleaseStage: 1
+    skipRing2ReleaseStage: false
+    targetRegionRing2: us
+    bakeTimeInMinutesRing2ReleaseStage: 1
 
-    # skipRing3ReleaseStage: false
-    # targetRegionRing3: apj
-    # bakeTimeInMinutesRing3ReleaseStage: 1
+    skipRing3ReleaseStage: false
+    targetRegionRing3: apj
