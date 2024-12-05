@@ -16,11 +16,14 @@ extends:
         region: "eu"
         autoPromote: true
         bakeTimeInMinutes: 1
+        dependsOn: ["init"]
       - name: "ring_1"
         region: "us"
         autoPromote: false
         bakeTimeInMinutes: 2
+        dependsOn: ["ring_0"]
       - name: "ring_2"
         region: "apj"
         autoPromote: false
         bakeTimeInMinutes: 3
+        dependsOn: ["ring_1"]
