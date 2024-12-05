@@ -3,30 +3,24 @@ trigger:
 
 resources:
   repositories:
-    - repository: manga-torremo-pipeline-azure
+    - repository: manga2-torremo-pipeline-azure
       endpoint: manganellidev
       type: github
-      name: manganellidev/manga-torremo-pipeline-azure
+      name: manganellidev/manga2-torremo-pipeline-azure
 
 extends:
-  template: sdp-pipeline.yml@manga-torremo-pipeline-azure
+  template: sdp-pipeline.yml@manga2-torremo-pipeline-azure
   parameters:
-    teamIdentifier: northstar
-    appName: train
-    artifactVersion: 1.2.334
-    # ghRepoUri: https://github.com/manganellidev/ado-task-app
-
-    skipRing0ReleaseStage: false
-    targetRegionRing0: int
-    bakeTimeInMinutesRing0ReleaseStage: 1
-
-    skipRing1ReleaseStage: false
-    targetRegionRing1: eu
-    bakeTimeInMinutesRing1ReleaseStage: 1
-
-    skipRing2ReleaseStage: false
-    targetRegionRing2: us
-    bakeTimeInMinutesRing2ReleaseStage: 1
-
-    skipRing3ReleaseStage: false
-    targetRegionRing3: apj
+    rings:
+      - name: "ring_0"
+        region: "eu"
+        autoPromote: true
+        bakeTimeInMinutes: 1
+      - name: "ring_1"
+        region: "us"
+        autoPromote: false
+        bakeTimeInMinutes: 2
+      - name: "ring_2"
+        region: "apj"
+        autoPromote: false
+        bakeTimeInMinutes: 3
