@@ -16,27 +16,27 @@ extends:
     artifactVersion: 1.2.334
 
     rings:
-      - name: "ring_0"
+      - name: "ring-0"
         skip: false
         autoPromote: true
         dynatraceSmokeTest: true
         targetRegion: "int"
         bakeTimeInMinutes: 1
-      - name: "ring_1"
+      - name: "ring-1"
         skip: false
         autoPromote: true
         dynatraceSmokeTest: true
         targetRegion: "eu"
         previousRegion: "int"
         bakeTimeInMinutes: 1
-      - name: "ring_2"
+      - name: "ring-2"
         skip: false
         autoPromote: true
         dynatraceSmokeTest: true
         targetRegion: "us"
         previousRegion: "eu"
         bakeTimeInMinutes: 1
-      - name: "ring_3"
+      - name: "ring-3"
         skip: false
         autoPromote: true
         dynatraceSmokeTest: true
