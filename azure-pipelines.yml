@@ -15,32 +15,31 @@ extends:
     appName: train
     artifactVersion: 1.2.334
 
+    # prettier-ignore
     rings:
-      - name: "ring_0"
-        skip: false
-        autoPromote: true
-        dynatraceSmokeTest: true
-        targetRegion: "int"
-        previousRegion: "none"
-        bakeTimeInMinutes: 1
-      - name: "ring_1"
-        skip: true
-        autoPromote: true
-        dynatraceSmokeTest: true
-        targetRegion: "eu"
+      - targetRegion: "int"              # Required: check available regions
+        previousRegion: "none"           # Required: none or previous region
+        autoPromote: true                # Optional: default false
+        bakeTimeInMinutes: 1             # Optional: default 1
+        skipBakeTime: false              # Optional: default false
+        skipPostDeployValidation: true   # Optional: default false
+      - targetRegion: "eu"
         previousRegion: "int"
+        autoPromote: true
         bakeTimeInMinutes: 1
+        skipBakeTime: false
+        skipPostDeployValidation: true
       # - name: "ring_2"
       #   skip: false
       #   autoPromote: true
-      #   dynatraceSmokeTest: true
+      #   skipDynatraceSmokeTest: true
       #   targetRegion: "us"
       #   previousRegion: "eu"
       #   bakeTimeInMinutes: 1
       # - name: "ring_3"
       #   skip: false
       #   autoPromote: true
-      #   dynatraceSmokeTest: true
+      #   skipDynatraceSmokeTest: true
       #   targetRegion: "apj"
       #   previousRegion: "us"
       #   bakeTimeInMinutes: 1
