@@ -27,7 +27,7 @@ extends:
         previousRegion: "int"
         autoPromote: true
         bakeTimeInMinutes: 1
-        skipBakeTime: false
+        skipBakeTime: true
         skipPostDeployValidation: true
       # - name: "ring_2"
       #   skip: false
