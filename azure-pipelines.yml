@@ -28,6 +28,18 @@ extends:
         autoPromote: true
         bakeTimeInMinutes: 1
         skipBakeTime: false
+        skipPostDeployValidation: false
+      - targetRegion: "us"
+        previousRegion: "eu"
+        autoPromote: true
+        bakeTimeInMinutes: 1
+        skipBakeTime: true
+        skipPostDeployValidation: false
+      - targetRegion: "apj"
+        previousRegion: "us"
+        autoPromote: true
+        bakeTimeInMinutes: 1
+        skipBakeTime: false
         skipPostDeployValidation: true
       # - name: "ring_2"
       #   skip: false
