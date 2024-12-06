@@ -15,29 +15,58 @@ extends:
     appName: train
     artifactVersion: 1.2.334
 
-    # Ring 0
-    skipRing0: false
-    autoPromoteRing0: true
-    dynatraceSmokeTestRing0: true
-    targetRegionRing0: int
-    bakeTimeInMinutesRing0: 1
+    rings:
+      - name: "ring_0"
+        skip: false
+        autoPromote: true
+        dynatraceSmokeTest: true
+        targetRegion: "int"
+        bakeTimeInMinutes: 1
+      - name: "ring_1"
+        skip: false
+        autoPromote: true
+        dynatraceSmokeTest: true
+        targetRegion: "eu"
+        previousRegion: "int"
+        bakeTimeInMinutes: 1
+      - name: "ring_2"
+        skip: false
+        autoPromote: true
+        dynatraceSmokeTest: true
+        targetRegion: "us"
+        previousRegion: "eu"
+        bakeTimeInMinutes: 1
+      - name: "ring_3"
+        skip: false
+        autoPromote: true
+        dynatraceSmokeTest: true
+        targetRegion: "apj"
+        previousRegion: "us"
+        bakeTimeInMinutes: 1
 
-    # Ring 1
-    skipRing1: false
-    autoPromoteRing1: true
-    dynatraceSmokeTestRing1: true
-    targetRegionRing1: eu
-    bakeTimeInMinutesRing1: 1
+    # # Ring 0
+    # skipRing0: false
+    # autoPromoteRing0: true
+    # dynatraceSmokeTestRing0: true
+    # targetRegionRing0: int
+    # bakeTimeInMinutesRing0: 1
 
-    # Ring 2
-    skipRing2: false
-    autoPromoteRing2: true
-    dynatraceSmokeTestRing2: true
-    targetRegionRing2: us
-    bakeTimeInMinutesRing2: 1
+    # # Ring 1
+    # skipRing1: false
+    # autoPromoteRing1: true
+    # dynatraceSmokeTestRing1: true
+    # targetRegionRing1: eu
+    # bakeTimeInMinutesRing1: 1
 
-    # Ring 3
-    skipRing3: false
-    autoPromoteRing3: true
-    dynatraceSmokeTestRing3: true
-    targetRegionRing3: apj
+    # # Ring 2
+    # skipRing2: false
+    # autoPromoteRing2: true
+    # dynatraceSmokeTestRing2: true
+    # targetRegionRing2: us
+    # bakeTimeInMinutesRing2: 1
+
+    # # Ring 3
+    # skipRing3: false
+    # autoPromoteRing3: true
+    # dynatraceSmokeTestRing3: true
+    # targetRegionRing3: apj
