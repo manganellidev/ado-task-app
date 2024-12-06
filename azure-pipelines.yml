@@ -24,26 +24,26 @@ extends:
         previousRegion: "none"
         bakeTimeInMinutes: 1
       - name: "ring_1"
-        skip: false
+        skip: true
         autoPromote: true
         dynatraceSmokeTest: true
         targetRegion: "eu"
         previousRegion: "int"
         bakeTimeInMinutes: 1
-      - name: "ring_2"
-        skip: false
-        autoPromote: true
-        dynatraceSmokeTest: true
-        targetRegion: "us"
-        previousRegion: "eu"
-        bakeTimeInMinutes: 1
-      - name: "ring_3"
-        skip: false
-        autoPromote: true
-        dynatraceSmokeTest: true
-        targetRegion: "apj"
-        previousRegion: "us"
-        bakeTimeInMinutes: 1
+      # - name: "ring_2"
+      #   skip: false
+      #   autoPromote: true
+      #   dynatraceSmokeTest: true
+      #   targetRegion: "us"
+      #   previousRegion: "eu"
+      #   bakeTimeInMinutes: 1
+      # - name: "ring_3"
+      #   skip: false
+      #   autoPromote: true
+      #   dynatraceSmokeTest: true
+      #   targetRegion: "apj"
+      #   previousRegion: "us"
+      #   bakeTimeInMinutes: 1
 
     # # Ring 0
     # skipRing0: false
