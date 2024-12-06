@@ -21,8 +21,8 @@ extends:
         previousRegion: "none"           # Required: none or previous region
         autoPromote: true                # Optional: default false
         bakeTimeInMinutes: 1             # Optional: default 1
-        skipBakeTime: true               # Optional: default false
-        skipPostDeployValidation: true   # Optional: default false
+        skipBakeTime: false              # Optional: default false
+        skipPostDeployValidation: false  # Optional: default false
       - targetRegion: "eu"
         previousRegion: "int"
         autoPromote: true
@@ -33,52 +33,11 @@ extends:
         previousRegion: "eu"
         autoPromote: true
         bakeTimeInMinutes: 1
-        skipBakeTime: true
+        skipBakeTime: false
         skipPostDeployValidation: false
       - targetRegion: "apj"
         previousRegion: "us"
         autoPromote: true
         bakeTimeInMinutes: 1
-        skipBakeTime: false
-        skipPostDeployValidation: true
-      # - name: "ring_2"
-      #   skip: false
-      #   autoPromote: true
-      #   skipDynatraceSmokeTest: true
-      #   targetRegion: "us"
-      #   previousRegion: "eu"
-      #   bakeTimeInMinutes: 1
-      # - name: "ring_3"
-      #   skip: false
-      #   autoPromote: true
-      #   skipDynatraceSmokeTest: true
-      #   targetRegion: "apj"
-      #   previousRegion: "us"
-      #   bakeTimeInMinutes: 1
-
-    # # Ring 0
-    # skipRing0: false
-    # autoPromoteRing0: true
-    # dynatraceSmokeTestRing0: true
-    # targetRegionRing0: int
-    # bakeTimeInMinutesRing0: 1
-
-    # # Ring 1
-    # skipRing1: false
-    # autoPromoteRing1: true
-    # dynatraceSmokeTestRing1: true
-    # targetRegionRing1: eu
-    # bakeTimeInMinutesRing1: 1
-
-    # # Ring 2
-    # skipRing2: false
-    # autoPromoteRing2: true
-    # dynatraceSmokeTestRing2: true
-    # targetRegionRing2: us
-    # bakeTimeInMinutesRing2: 1
-
-    # # Ring 3
-    # skipRing3: false
-    # autoPromoteRing3: true
-    # dynatraceSmokeTestRing3: true
-    # targetRegionRing3: apj
+        skipBakeTime: true
+        skipPostDeployValidation: false
