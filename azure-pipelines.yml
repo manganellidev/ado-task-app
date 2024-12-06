@@ -14,23 +14,30 @@ extends:
     teamIdentifier: northstar
     appName: train
     artifactVersion: 1.2.334
-    # ghRepoUri: https://github.com/manganellidev/ado-task-app
 
+    # Ring 0
     skipRing0: false
     autoPromoteRing0: true
+    dynatraceSmokeTestRing0: true
     targetRegionRing0: int
     bakeTimeInMinutesRing0: 1
 
+    # Ring 1
     skipRing1: false
-    autoPromoteRing1: false
+    autoPromoteRing1: true
+    dynatraceSmokeTestRing1: true
     targetRegionRing1: eu
     bakeTimeInMinutesRing1: 1
 
+    # Ring 2
     skipRing2: false
     autoPromoteRing2: true
+    dynatraceSmokeTestRing2: true
     targetRegionRing2: us
     bakeTimeInMinutesRing2: 1
 
+    # Ring 3
     skipRing3: false
-    autoPromoteRing3: false
+    autoPromoteRing3: true
+    dynatraceSmokeTestRing3: true
     targetRegionRing3: apj
