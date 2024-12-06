@@ -21,13 +21,13 @@ extends:
         previousRegion: "none"           # Required: none or previous region
         autoPromote: true                # Optional: default false
         bakeTimeInMinutes: 1             # Optional: default 1
-        skipBakeTime: false              # Optional: default false
-        skipPostDeployValidation: false  # Optional: default false
+        skipBakeTime: true               # Optional: default false
+        skipPostDeployValidation: true   # Optional: default false
       - targetRegion: "eu"
         previousRegion: "int"
         autoPromote: true
         bakeTimeInMinutes: 1
-        skipBakeTime: true
+        skipBakeTime: false
         skipPostDeployValidation: true
       # - name: "ring_2"
       #   skip: false
